@@ -1,8 +1,8 @@
-const Sequelize = require('sequelize');
-const database = require('../config/db');
+const Sequelize = require("sequelize");
+const connection = require("../config/db");
 
-const User = database.define('tb_user', {
-    id:{
+const User = connection.define('user', {
+    id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
@@ -14,13 +14,19 @@ const User = database.define('tb_user', {
     },
     email: {
         type: Sequelize.STRING,
-        unique: true,
+        unique:true,
         allowNull: false
     },
     password: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
     }
-})
+});
 
-module.exports = User;
+User.sync({force: false})
+    .then(() =>{
+        //
+    })
+    .catch((err) => {
+        console.log(err)
+    });

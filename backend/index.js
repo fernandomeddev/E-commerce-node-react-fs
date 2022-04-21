@@ -1,11 +1,17 @@
-const app = require('express')()
-const consign = require('consign')
-const db = require('./config/db')
-const user = require('./model/user')
+const app = require('express')();
+const consign = require('consign');
+const connection = require('./config/db');
+const userModel = require('./model/User');
 
-app.user = user
-app.db = db
-
+connection
+    .authenticate()
+    .then(() => {
+        console.log("Conexão feita com sucesso!")
+    })
+    .catch((msgError) => {
+        console.log(msgError);
+    })
+//app.connection = connection;
 
 consign()
     .then('./config/middlewares.js')
