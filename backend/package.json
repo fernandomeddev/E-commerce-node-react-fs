@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon",
-    "production": "pm2 start index.js --name nex-challenge-backend"
+    "production": "pm2 start server.js --name nex-challenge-backend"
   },
   "author": "",
   "license": "ISC",
