@@ -23,7 +23,7 @@ module.exports = app => {
 
             const userFromDB = await db.users.findOne({where:{user_email: user.user_email}})
             
-            if(!user.id){
+            if(!user.user_id){
                 notExistsOrError(userFromDB, 'Usuário já cadastrado')
             }
             console.log(userFromDB)
@@ -35,7 +35,7 @@ module.exports = app => {
         delete user.confirmPassword
 
         
-        if(user.id){
+        if(user.user_id){
             db.users.update(req.body, {where: {user_id : req.params.id}})
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
