@@ -7,7 +7,7 @@ import jpIMG from "../../assets/img/logo3.png";
 import "./index.css";
 
 const LoginPage = () => {
-  const {authenticated, login} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
   const [user_email, setEmail] = useState("");
   const [user_password, setPassword] = useState("");
 
@@ -23,7 +23,7 @@ const LoginPage = () => {
       <div className="container-login">
         <div className="wrap-login">
           <form className="login-form" onSubmit={handleSubmit}>
-            <span className="login-form-title"> {String(authenticated)} </span>
+            <span className="login-form-title"> Bem vindo </span>
             <p></p>
             <span className="login-form-title">
               <img src={jpIMG} alt="Jovem Programador" />
@@ -55,7 +55,7 @@ const LoginPage = () => {
 
             <div className="text-center">
               <span className="txt1">Não possui conta? </span>
-              <a className="txt2" href="/users">
+              <a className="txt2" href="/signup">
                 Criar conta
               </a>
             </div>
