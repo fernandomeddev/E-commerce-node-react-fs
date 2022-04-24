@@ -1,30 +1,39 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../contexts/auth";
 
 import jpIMG from "../../assets/img/logo3.png";
 
 import "./index.css";
 
-function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginPage = () => {
+  const {authenticated, login} = useContext(AuthContext);
+  const [user_email, setEmail] = useState("");
+  const [user_password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit", {user_email, user_password});
+    login(user_email, user_password);
+  }
+
 
   return (
     <div className="container">
       <div className="container-login">
         <div className="wrap-login">
-          <form className="login-form">
-            <span className="login-form-title"> Bem vindo </span>
-
+          <form className="login-form" onSubmit={handleSubmit}>
+            <span className="login-form-title"> {String(authenticated)} </span>
+            <p></p>
             <span className="login-form-title">
               <img src={jpIMG} alt="Jovem Programador" />
             </span>
 
             <div className="wrap-input">
               <input
-                className={email !== "" ? "has-val input" : "input"}
+                className={user_email !== "" ? "has-val input" : "input"}
                 type="email"
-                value={email}
+                value={user_email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <span className="focus-input" data-placeholder="Email"></span>
@@ -32,16 +41,16 @@ function LoginPage() {
 
             <div className="wrap-input">
               <input
-                className={password !== "" ? "has-val input" : "input"}
+                className={user_password !== "" ? "has-val input" : "input"}
                 type="password"
-                value={password}
+                value={user_password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <span className="focus-input" data-placeholder="Password"></span>
             </div>
 
             <div className="container-login-form-btn">
-              <button className="login-form-btn">Login</button>
+              <button type="submit" className="login-form-btn">Login</button>
             </div>
 
             <div className="text-center">

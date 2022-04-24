@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios'
-import Main from '../template/Main'
+import Main from '../../components/template/Main'
 
 const headerProps = {
     icon: 'users',
@@ -13,6 +13,7 @@ const initialState = {
     user: {user_name: '', user_email:'', user_password:'', confirmPassword: ''},
     list: []
 }
+
 
 export default class User extends Component{
     state = {...initialState }
@@ -28,9 +29,11 @@ export default class User extends Component{
         axios[method](url, user)
             .then(resp => {
                 const list = this.getUpdatedList(resp.data)
-                console.log(resp.data)
+                console.log(list)
                 this.setState({user: initialState.user, list})
             })
+            
+    
     }
 
     getUpdatedList(user){
@@ -102,10 +105,10 @@ export default class User extends Component{
                             Registrar
                         </button>
 
-                        <button className="btn btn-primary ml-2"
+                        <a href="/login" className="btn btn-primary ml-2"
                             onClick={e=> this.clear(e)}>
                             Cancelar
-                        </button>
+                        </a>
 
                     </div>
                 </div>

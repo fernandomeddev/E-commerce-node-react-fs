@@ -1,6 +1,5 @@
 :root {
     --bg-dark:#1A2F3A;
-    --logo-height: 100px;
     --header-height:100px;
     --aside-width:225px;
     --footer-height: 40px;
@@ -18,22 +17,20 @@
 .app {
     margin: 0px;
     display: grid;
-    grid-template-columns: var(--aside-width) 1fr;
+    
+    grid-template-columns: 100% 1fr ;
     grid-template-rows:
         var(--header-height)
         1fr
         var(--footer-height);
     grid-template-areas: 
-        "logo header"
-        "menu content"
-        "menu footer";
+        "header header"
+        "content content"
+        "footer footer";
     height: 100vh;
     background-color: #e4f2e7;
 }
 
-aside.logo {
-    grid-area: logo;
-}
 
 header.header {
     grid-area: header;
