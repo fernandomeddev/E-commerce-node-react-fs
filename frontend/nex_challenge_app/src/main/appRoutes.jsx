@@ -1,36 +1,41 @@
 /* eslint-disable import/no-anonymous-default-export */
-import React, {useState} from "react"
+import React, {useContext} from "react"
 import { BrowserRouter as Router,
+    Navigate,
     Route, 
     Routes, 
     } from 'react-router-dom';
 
 import LoginPage from "../pages/LoginPage/index";
-import Home from '../components/home/Home'
+import Home from '../pages/HomePage/index'
 import User from '../pages/SignupPage/index'
-import { AuthContext } from "../contexts/auth";
+import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const AppRoutes = () => {
-    const [user, setUser] = useState(null);
+    const Private = ({children}) => {
+        const { authenticated, loading } = useContext(AuthContext);
 
-    const login = (user_email, user_password) => {
-        console.log("login auth", {user_email, user_password});
-        setUser({user_email, user_password});
+        if(loading){
+            //console.log('carregando...')
+            return <div className="loading">Carregando...</div>
+        }
+
+        if(!authenticated){
+            //console.log('saiu...')
+            return <Navigate to="/login" />
+        }
+        //console.log('carregou...')
+        return children;
     };
-
-    const logout = () => {
-        console.log('logout')
-    };
-
     return (
         <Router>
-            <AuthContext.Provider value={{authenticated: !! user, user, login, logout }}>
+            <AuthProvider>
                 <Routes>
                     <Route exact path="/login" element={<LoginPage />}/>
-                    <Route exact path="/users" element={<User />}/>
-                    <Route exact path="/" element={<Home />}/>
+                    <Route exact path="/signup" element={<User />}/>
+                    <Route exact path="/" element={<Private><Home /></Private>}/>
                 </Routes>
-            </AuthContext.Provider>
+            </AuthProvider>
         </Router>
     )
 }
