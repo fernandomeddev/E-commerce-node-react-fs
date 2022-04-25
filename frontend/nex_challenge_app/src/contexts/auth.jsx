@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect, createContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import {api, createSession} from '../services/api'
+import {api, createSession, createUser} from '../services/api'
 
 export const AuthContext = createContext();
 
@@ -23,12 +24,15 @@ export const AuthProvider = ({children}) => {
       setLoading(false);
     }, []);
 
+
+    const signup = async (user_name, user_email, user_password, confirmPassword) => {
+        const response = await createUser(user_name, user_email, user_password, confirmPassword)
+    }
+
+
     const login = async (user_email, user_password) => {
         const response = await createSession( user_email, user_password)
-        
-        console.log("login", response.data);
-        // api cria uma session
-
+    
         const loggedUser = response.data.user_email
         const token = response.data.token;
             
@@ -42,8 +46,7 @@ export const AuthProvider = ({children}) => {
     };
 
     const logout = () => {
-        console.log('logout')
-
+        
         localStorage.removeItem("user_email");
         localStorage.removeItem("token");
 
@@ -55,7 +58,7 @@ export const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider 
-        value={{authenticated: !! user, user, loading, login, logout }}
+        value={{authenticated: !! user, user, loading, login, logout, signup }}
         >
             {children}
         </AuthContext.Provider>
