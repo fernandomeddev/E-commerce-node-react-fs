@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/auth";
 
 import jpIMG from "../../assets/img/logo3.png";
 import Warning from "../../assets/img/warning.png"
+import Check from "../../assets/img/verificado.png";
 
 import "./style.css";
 
@@ -28,16 +29,13 @@ const RegisterPage = () => {
 
     
     signup(user_name, user_email, user_password, confirmPassword)
-    .then((response) => {
-
+    .then(() => {
         return setRegisterMsg("sucess")
     })
-
     return setRegisterMsg("serverError")
+
   }
 
-  
-    
     if(registerMsg === 'sucess'){
         return (
             <div className="container">
@@ -47,7 +45,7 @@ const RegisterPage = () => {
                     <span className="login-form-title"><i className="fa fa-check-circle-o">Cadastro realizado com sucesso!</i></span>
                     <p></p>
                     <span className="login-form-title">
-                    <img src={jpIMG} alt="Logo" />
+                    <img src={Check} alt="Logo" />
                     </span>
 
                     <div className="container-login-form-btn">

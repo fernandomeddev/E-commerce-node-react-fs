@@ -34,9 +34,11 @@ export const AuthProvider = ({children}) => {
         const response = await createSession( user_email, user_password)
     
         const loggedUser = response.data.user_email
+        const loggedUserName = response.data.user_name
         const token = response.data.token;
             
         localStorage.setItem('user_email', JSON.stringify(loggedUser));
+        localStorage.setItem('user_name', JSON.stringify(loggedUserName));
         localStorage.setItem('token', token);
 
         api.defaults.headers.Authorization = `Bearer ${token}`;
@@ -48,6 +50,7 @@ export const AuthProvider = ({children}) => {
     const logout = () => {
         
         localStorage.removeItem("user_email");
+        localStorage.removeItem("user_name");
         localStorage.removeItem("token");
 
         api.defaults.headers.Authorization = null;

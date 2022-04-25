@@ -1,0 +1,9 @@
+/* CSS Pra Ajustes simples na Home Page*/
+img {
+    width: 200px;
+}
+button .logout {
+    display: flex;
+    margin-left: 90%;
+    width: 100px;
+}
