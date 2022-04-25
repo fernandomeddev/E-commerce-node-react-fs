@@ -8,7 +8,7 @@ import { BrowserRouter as Router,
 
 import LoginPage from "../pages/LoginPage/index";
 import Home from '../pages/HomePage/index'
-import User from '../pages/SignupPage/index'
+import User from '../pages/RegisterPage/index'
 import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const AppRoutes = () => {
