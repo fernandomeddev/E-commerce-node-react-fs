@@ -3,7 +3,7 @@ import React, {useState, useEffect, createContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import {api, createSession, createUser} from '../services/api'
+import {api, createSession} from '../services/api'
 
 export const AuthContext = createContext();
 
@@ -11,6 +11,7 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [serverError, setServerError] = useState(false)
 
     useEffect(()=>{
       const recoveredUser = localStorage.getItem('user_email');
@@ -23,12 +24,6 @@ export const AuthProvider = ({children}) => {
 
       setLoading(false);
     }, []);
-
-
-    const signup = async (user_name, user_email, user_password, confirmPassword) => {
-        const response = await createUser(user_name, user_email, user_password, confirmPassword)
-    }
-
 
     const login = async (user_email, user_password) => {
         const response = await createSession( user_email, user_password)
@@ -61,7 +56,7 @@ export const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider 
-        value={{authenticated: !! user, user, loading, login, logout, signup }}
+        value={{authenticated: !! user, user, loading, serverError, login, logout }}
         >
             {children}
         </AuthContext.Provider>
