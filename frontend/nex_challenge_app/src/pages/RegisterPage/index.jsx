@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../contexts/auth";
+import React, { useState } from "react";
+
+import {api} from '../../services/api'
 
 import jpIMG from "../../assets/img/logo3.png";
 import Warning from "../../assets/img/warning.png"
@@ -9,32 +10,52 @@ import Check from "../../assets/img/verificado.png";
 import "./style.css";
 
 const RegisterPage = () => {
-  const {signup} = useContext(AuthContext);
+  
   const [user_name, setName] = useState("");
   const [user_email, setEmail] = useState("");
   const [user_password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [registerMsg, setRegisterMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submit", {user_name, user_email, user_password, confirmPassword});
-    if(!user_name || !user_email || !user_password || user_password !== confirmPassword){
-        return alert("Ops não foi possível realizar seu cadastro revise os campos e tente novamente!")
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("submit", {user_name, user_email, user_password, confirmPassword});
+        if(!user_name || !user_email || !user_password || !confirmPassword){
+            return alert("Ops não foi possível realizar seu cadastro revise os campos e tente novamente!")
+        }
+
+        if(user_password !== confirmPassword){
+            return alert("Ops Os campos Senha e Confirmação de senha estão diferentes");
+        }
+
+        api.post('/signup', {user_name, user_email, user_password, confirmPassword})
+            .then(res => {
+                console.log('sucess')
+                setLoading(false)
+                setRegisterMsg('sucess')
+                return res;
+            })
+            .catch((error)=>{
+                console.log('serverError')
+                setLoading(false)
+                setRegisterMsg('serverError')
+                return JSON.stringify(error);
+            })
+        
+        return setLoading(true) ;
+
     }
-
-    if(user_password !== confirmPassword){
-        return alert("Ops Os campos Senha e Confirmação de senha estão diferentes");
+    if(loading){
+        return (
+            <div className="container-login">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden"></span>
+                </div>
+            </div>
+            
+        )
     }
-
-    
-    signup(user_name, user_email, user_password, confirmPassword)
-    .then(() => {
-        return setRegisterMsg("sucess")
-    })
-    return setRegisterMsg("serverError")
-
-  }
 
     if(registerMsg === 'sucess'){
         return (
