@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { AuthContext } from "../../contexts/auth";
 
 import jpIMG from "../../assets/img/logo3.png";
@@ -9,7 +9,7 @@ import Check from "../../assets/img/verificado.png";
 import "./style.css";
 
 const LoginPage = () => {
-  const {login} = useContext(AuthContext);
+  //const {login} = useContext(AuthContext);
   const [user_email, setEmail] = useState("");
   const [user_password, setPassword] = useState("");
   const [validateLogin, setValidateLogin] = useState("")
